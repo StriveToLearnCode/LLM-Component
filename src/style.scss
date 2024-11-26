@@ -1,0 +1,49 @@
+*{
+  color: #fff;
+  scrollbar-color: #e3e3e3 transparent;
+  box-sizing: border-box;
+}
+#app,html,body {
+  height: 100%;
+}
+@font-face {
+  font-family: 'iconfont';  /* Project id 4759103 */
+  src: url('//at.alicdn.com/t/c/font_4759103_uojjc3wui9.woff2?t=1732609754569') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4759103_uojjc3wui9.woff?t=1732609754569') format('woff'),
+       url('//at.alicdn.com/t/c/font_4759103_uojjc3wui9.ttf?t=1732609754569') format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #30302d;
+  cursor: pointer;
+}
+/* quill-editor样式修改 */
+.pdf-container {
+  margin: 10px 0;
+  border-radius: 25px;
+}
+.ql-editor {
+  height: 120px !important;
+  background-color: #393937 !important;
+}
+.ql-editor.ql-blank::before {
+  font-size: 18px;
+  color: #9e9a93 !important;
+  caret-color: #fff;  /* 设置光标颜色 */
+}
+.ql-editor p {
+  padding: 0 60px 0 0;
+  font-size: 18px;
+  background-color: #393937 !important;
+  caret-color: #fff;  /* 设置光标颜色 */
+}
+.ql-container.ql-snow,
+.ql-editor {
+  border: 1px solid #393937 !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 25px;
+}
+/* ------------------------------------------ */
