@@ -12,7 +12,12 @@
       <i class="iconfont" @click="insertImage">&#xe8bc;</i>
     </div>
 
-    <div class="button iconfont" @click="sendMessage">&#xe60f;</div>
+    <div class="button iconfont" @click="sendMessage">
+      <div class="loading" v-if="isSending">
+        <loading></loading>
+      </div>
+      <div v-else>&#xe60f;</div>
+    </div>
     <div v-html="content" style="display: none"></div>
   </div>
 </template>
@@ -22,6 +27,7 @@ import { ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import { quickChat } from "@/api/chat";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import loading from "./loading.vue";
 const content = ref(""); // 绑定编辑器内容
 const quill = ref(null);
 const isSending = ref(false); // 用于跟踪发送状态
@@ -36,32 +42,35 @@ const emit = defineEmits(["sendMsg"]);
 
 // 发送消息
 const sendMessage = async () => {
+  if (isSending.value) return;
   if (!content.value) {
     alert("消息不能为空");
     return;
   }
   const message = content.value?.ops[0]?.insert;
   emit("sendMsg", { role: "user", content: message });
+  isSending.value = true;
   const res = await quickChat(message);
+  isSending.value = false;
   emit("sendMsg", res.data.choices[0].message);
 };
 
 // 插入图片
-// const insertImage = () => {
-//   const url = prompt("Enter the image URL");
-//   const range = quill.value.quill.getSelection();
-//   quill.value.quill.insertEmbed(range.index, "image", url);
-// };
+const insertImage = () => {
+  const url = prompt("Enter the image URL");
+  const range = quill.value.quill.getSelection();
+  quill.value.quill.insertEmbed(range.index, "image", url);
+};
 
 // 插入 PDF
-// const insertPDF = () => {
-//   const url = prompt("Enter the PDF URL");
-//   const range = quill.value.quill.getSelection();
-//   const pdfContainer = `<div class="pdf-container">
-//                               <embed src="${url}" width="500" height="375" type="application/pdf">
-//                             </div>`;
-//   quill.value.quill.clipboard.dangerouslyPasteHTML(range.index, pdfContainer);
-// };
+const insertPDF = () => {
+  const url = prompt("Enter the PDF URL");
+  const range = quill.value.quill.getSelection();
+  const pdfContainer = `<div class="pdf-container">
+                              <embed src="${url}" width="500" height="375" type="application/pdf">
+                            </div>`;
+  quill.value.quill.clipboard.dangerouslyPasteHTML(range.index, pdfContainer);
+};
 </script>
 
 <style scoped>
@@ -90,7 +99,7 @@ const sendMessage = async () => {
   height: 30px;
   background-color: #d7d7d7;
 }
-.button.iconfont:hover {
+/* .button.iconfont:hover {
   background-color: #000;
-}
+} */
 </style>
