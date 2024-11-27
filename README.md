@@ -21,6 +21,6 @@
 
 在使用该组件之前，确保你已经安装了 **Vue 3** 和相关依赖。
 
-```bash
-npm install @vueup/vue-quill
-npm install axios  # 如果还没有安装 axios
+## 效果图
+
+![Uploading 8b634c17559fa8ede1abb5459a29dbe.png…]()
