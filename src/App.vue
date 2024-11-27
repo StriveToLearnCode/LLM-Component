@@ -60,7 +60,9 @@ const contain = ref(null);
 // 处理消息发送
 const responseMsg = (message) => {
   // 滚动到最新消息
-  contain.value.scrollTop = 99999999;
+  if (contain.value) {
+    contain.value.scrollTop = contain.value.scrollHeight;
+  }
   console.log(message);
 
   // 如果消息来自 AI，则执行打字机效果
@@ -107,11 +109,15 @@ const typingEffect = (text) => {
       messageArr.value[lastMessageIndex].content += text[index]; // 每次追加一个字符
       index++;
       // 滚动到最新消息
-      contain.value.scrollTop = 99999999;
+      if (contain.value) {
+        contain.value.scrollTop = contain.value.scrollHeight;
+      }
     } else {
       clearInterval(typingInterval); // 打字结束，清除定时器
       // 滚动到最新消息
-      contain.value.scrollTop = 99999999;
+      if (contain.value) {
+        contain.value.scrollTop = contain.value.scrollHeight;
+      }
     }
   }, 50); // 控制每个字符之间的时间间隔
 };

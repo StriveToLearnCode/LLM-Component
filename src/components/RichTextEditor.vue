@@ -16,7 +16,7 @@
       <div class="loading" v-if="isSending">
         <loading></loading>
       </div>
-      <div v-else>&#xe60f;</div>
+      <div class="arrow" v-else>&#xe60f;</div>
     </div>
     <div v-html="content" style="display: none"></div>
   </div>
@@ -99,7 +99,8 @@ const insertPDF = () => {
   height: 30px;
   background-color: #d7d7d7;
 }
-/* .button.iconfont:hover {
+.arrow:hover {
   background-color: #000;
-} */
+  border-radius: 50%;
+}
 </style>
