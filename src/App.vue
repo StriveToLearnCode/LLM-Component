@@ -1,5 +1,5 @@
 <template>
-  <div class="container" ref="container">
+  <div class="container">
     <div class="top">
       <div class="title">
         <i class="iconfont">&#xe626;</i> Introducing Claude,AI Assistant<i
@@ -8,7 +8,7 @@
         >
       </div>
     </div>
-    <div class="content">
+    <div class="content" ref="contain">
       <!-- 用户 -->
       <div v-for="(item, index) in messageArr" :key="index">
         <div class="left" v-if="item.role === 'user'">
@@ -52,14 +52,15 @@
   </div>
 </template>
 <script setup>
-import { ref, nextTick } from "vue";
+import { ref } from "vue";
 import RichTextEditor from "./components/RichTextEditor.vue";
 import { marked } from "marked"; // 引入 marked 库
-import hljs from "highlight.js";
 const messageArr = ref([]);
-const container = ref(null);
+const contain = ref(null);
 // 处理消息发送
 const responseMsg = (message) => {
+  // 滚动到最新消息
+  contain.value.scrollTop = 99999999;
   console.log(message);
 
   // 如果消息来自 AI，则执行打字机效果
@@ -73,9 +74,6 @@ const responseMsg = (message) => {
   } else {
     messageArr.value.push(message);
   }
-
-  // 滚动到最新消息
-  container.value.scrollTop = container.value.scrollHeight;
 };
 
 // 复制消息内容
@@ -109,28 +107,18 @@ const typingEffect = (text) => {
       messageArr.value[lastMessageIndex].content += text[index]; // 每次追加一个字符
       index++;
       // 滚动到最新消息
-      container.value.scrollTop = container.value.scrollHeight;
+      contain.value.scrollTop = 99999999;
     } else {
       clearInterval(typingInterval); // 打字结束，清除定时器
-      nextTick(() => {
-        highlightCode(); // 打字结束后执行代码高亮
-      });
       // 滚动到最新消息
-      container.value.scrollTop = container.value.scrollHeight;
+      contain.value.scrollTop = 99999999;
     }
   }, 50); // 控制每个字符之间的时间间隔
-};
-// 代码高亮
-const highlightCode = () => {
-  const codeBlocks = document.querySelectorAll("pre code");
-  codeBlocks.forEach((block) => {
-    hljs.highlightBlock(block); // 使用 highlight.js 高亮代码块
-  });
 };
 </script>
 <style scoped lang="scss">
 .container {
-  height: 100%;
+  height: 731px;
   background-color: #2d2d2a;
   padding: 10px 30px;
   .top {
