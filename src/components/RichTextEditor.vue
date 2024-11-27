@@ -23,7 +23,8 @@ import { QuillEditor } from "@vueup/vue-quill";
 import { quickChat } from "@/api/chat";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 const content = ref(""); // 绑定编辑器内容
-const quill = ref();
+const quill = ref(null);
+const isSending = ref(false); // 用于跟踪发送状态
 const editorOptions = {
   placeholder: "Reply to Claude...",
   modules: {
@@ -43,28 +44,24 @@ const sendMessage = async () => {
   emit("sendMsg", { role: "user", content: message });
   const res = await quickChat(message);
   emit("sendMsg", res.data.choices[0].message);
-  quill.setContents([{ ops: [] }]);
 };
 
 // 插入图片
-const insertImage = () => {
-  const url = prompt("Enter the image URL");
-  const range = quillEditor.value.quill.getSelection();
-  quillEditor.value.quill.insertEmbed(range.index, "image", url);
-};
+// const insertImage = () => {
+//   const url = prompt("Enter the image URL");
+//   const range = quill.value.quill.getSelection();
+//   quill.value.quill.insertEmbed(range.index, "image", url);
+// };
 
 // 插入 PDF
-const insertPDF = () => {
-  const url = prompt("Enter the PDF URL");
-  const range = quillEditor.value.quill.getSelection();
-  const pdfContainer = `<div class="pdf-container">
-                              <embed src="${url}" width="500" height="375" type="application/pdf">
-                            </div>`;
-  quillEditor.value.quill.clipboard.dangerouslyPasteHTML(
-    range.index,
-    pdfContainer
-  );
-};
+// const insertPDF = () => {
+//   const url = prompt("Enter the PDF URL");
+//   const range = quill.value.quill.getSelection();
+//   const pdfContainer = `<div class="pdf-container">
+//                               <embed src="${url}" width="500" height="375" type="application/pdf">
+//                             </div>`;
+//   quill.value.quill.clipboard.dangerouslyPasteHTML(range.index, pdfContainer);
+// };
 </script>
 
 <style scoped>
