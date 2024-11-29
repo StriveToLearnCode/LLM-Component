@@ -3,7 +3,7 @@
     <div class="top">
       <div class="title">Claude</div>
       <div>
-        <i class="iconfont">&#xe604;</i>
+        <i class="iconfont" @click="closeSidebar">&#xe604;</i>
       </div>
     </div>
     <div class="content">
@@ -29,7 +29,13 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+const emit = defineEmits(["closeSidebar"]);
+const closeSidebar = () => {
+  emit("closeSidebar", false);
+};
+</script>
 <style scoped lang="scss">
 .container {
   height: 100%;

@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <div class="left-content">
-      <Sidebar></Sidebar>
+    <div class="left-content" v-if="isSidebarOpen">
+      <Sidebar @closeSidebar="closeSidebar"></Sidebar>
+    </div>
+    <div class="open-sidebar" v-else>
+      <i class="iconfont" @click="openSidebar"> &#xe6a4;</i>
     </div>
     <div class="right-content">
       <div class="top">
@@ -63,6 +66,7 @@ import Sidebar from "./components/Sidebar.vue";
 import { marked } from "marked"; // 引入 marked 库
 const messageArr = ref([]);
 const contain = ref(null);
+const isSidebarOpen = ref(true);
 // 处理消息发送
 const responseMsg = (message) => {
   // 滚动到最新消息
@@ -127,6 +131,18 @@ const typingEffect = (text) => {
     }
   }, 50); // 控制每个字符之间的时间间隔
 };
+// 关闭侧边栏
+const closeSidebar = (value) => {
+  console.log("关闭侧边栏", value);
+  // 在这里实现关闭侧边栏的逻辑
+  isSidebarOpen.value = value;
+};
+// 打开侧边栏
+const openSidebar = () => {
+  console.log("打开侧边栏");
+  // 在这里实现打开侧边栏的逻辑
+  isSidebarOpen.value = true;
+};
 </script>
 <style scoped lang="scss">
 .container {
@@ -136,6 +152,10 @@ const typingEffect = (text) => {
   .left-content {
     width: 280px;
     background-color: #23221e;
+  }
+  .open-sidebar {
+    font-size: 22px;
+    padding: 5px 0;
   }
   .right-content {
     flex: 1;
