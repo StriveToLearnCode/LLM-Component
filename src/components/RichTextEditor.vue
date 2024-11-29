@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
     <!-- Quill 编辑器 -->
     <QuillEditor
       theme="snow"
@@ -7,12 +7,25 @@
       v-model:content="content"
       :options="editorOptions"
     />
-    <div class="tools">
-      <i class="iconfont" @click="insertPDF">&#xe6c8;</i>
-      <i class="iconfont" @click="insertImage">&#xe8bc;</i>
+    <div class="absolute bottom-20 right-2">
+      <!-- pdf按钮 -->
+      <i
+        class="iconfont cursor-pointer text-2xl bg-gray-800 p-2 rounded-full mr-2"
+        @click="insertPDF"
+        >&#xe6c8;</i
+      >
+      <!-- 照片按钮 -->
+      <i
+        class="iconfont cursor-pointer text-2xl bg-gray-800 p-2 rounded-full"
+        @click="insertImage"
+        >&#xe8bc;</i
+      >
     </div>
 
-    <div class="button iconfont" @click="sendMessage">
+    <div
+      class="iconfont absolute bottom-2 right-2 cursor-pointer inline-block text-4xl bg-gray-300 rounded-full flex items-center justify-center w-14 h-14"
+      @click="sendMessage"
+    >
       <div class="loading" v-if="isSending">
         <loading></loading>
       </div>
@@ -74,6 +87,9 @@ const insertPDF = () => {
 </script>
 
 <style scoped>
+.box {
+  position: relative;
+}
 .tools {
   position: absolute;
   bottom: 100px;

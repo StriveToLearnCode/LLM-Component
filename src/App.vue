@@ -1,53 +1,69 @@
 <template>
-  <div class="container">
-    <div class="top">
-      <div class="title">
+  <div class="h-screen bg-gray-800 p-4 relative">
+    <div>
+      <div class="text-center text-2xl">
         <i class="iconfont">&#xe626;</i> Introducing Claude,AI Assistant<i
           class="iconfont"
           >&#xe64c;</i
         >
       </div>
     </div>
-    <div class="content" ref="contain">
+    <div class="mt-4 w-full overflow-auto" ref="contain">
       <!-- 用户 -->
       <div v-for="(item, index) in messageArr" :key="index">
-        <div class="left" v-if="item.role === 'user'">
-          <div class="user">
-            <div class="avatar">
-              <img src="@/assets/user.png" alt="User Avatar" />
+        <!-- 原先left -->
+        <div class="rounded-lg p-4 mb-4 bg-gray-700" v-if="item.role === 'user'">
+          <div class="flex items-center bg-gray-700">
+            <div class="bg-gray-700 p-4">
+              <img
+                class="w-12 h-12 rounded-full bg-gray-700"
+                src="@/assets/user.png"
+                alt="User Avatar"
+              />
             </div>
-            <div class="text">{{ item.content }}</div>
+            <div class="bg-gray-700 p-4 leading-6">{{ item.content }}</div>
           </div>
         </div>
         <!-- AI -->
-        <div class="right" v-else>
-          <div class="Ai">
-            <div class="text" v-html="renderMarkdown(item.content)"></div>
-            <div class="avatar">
-              <img src="@/assets/chatgpt.jpg" alt="AI Avatar" />
+        <!-- 原先right -->
+        <div class="rounded-lg p-4 mb-4 bg-gray-600 relative" v-else>
+          <div class="flex items-center bg-gray-600 justify-between">
+            <div
+              class="bg-gray-600 p-4 leading-6"
+              v-html="renderMarkdown(item.content)"
+            ></div>
+            <div class="bg-gray-600 p-4">
+              <img
+                class="w-12 h-12 rounded-full bg-gray-600"
+                src="@/assets/chatgpt.jpg"
+                alt="AI Avatar"
+              />
             </div>
           </div>
-          <div class="tools">
-            <div class="copy" @click="copyMessage(item.content)">
+          <div
+            class="absolute right-4 flex justify-center items-center text-sm bg-gray-600 h-8 rounded-lg w-48 shadow-md"
+          >
+            <div class="cursor-pointer" @click="copyMessage(item.content)">
               <i class="iconfont">&#xe706;</i>
-              <span>Copy</span>
+              <span class="bg-gray-600">Copy</span>
             </div>
-            <div class="retry">
+            <div class="cursor-pointer">
               <i class="iconfont">&#xe774;</i>
-              <span>Retry</span>
+              <span class="bg-gray-600">Retry</span>
             </div>
-            <div class="like">
+            <div class="cursor-pointer">
               <i class="iconfont">&#xec7f;</i>
             </div>
-            <div class="dislike">
+            <div class="cursor-pointer">
               <i class="iconfont">&#xe62d;</i>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="bottom">
-      <RichTextEditor @sendMsg="responseMsg" />
+    <!-- 输入框区域 -->
+    <div class="w-full absolute bottom-4 right-1 tablet:right-0">
+      <RichTextEditor class="w-4/5 tablet:w-1/2 m-auto" @sendMsg="responseMsg" />
     </div>
   </div>
 </template>
@@ -116,97 +132,13 @@ const typingEffect = (text) => {
   }, 50) // 控制每个字符之间的时间间隔
 }
 </script>
-<style scoped lang="scss">
-.container {
-  height: 731px;
-  background-color: #2d2d2a;
-  padding: 10px 30px;
-  .top {
-    .title {
-      font-size: 22px;
-      text-align: center;
-    }
-  }
-  .content {
-    margin-top: 30px;
-    width: 100%;
-    height: 520px;
-    overflow: auto;
-    .left,
-    .right {
-      border-radius: 10px; /* 添加边框圆角 */
-      padding: 10px;
-      margin-bottom: 25px;
-    }
-    // 用户
-    .left {
-      background-color: #22211e;
-      .user {
-        display: flex;
-        align-items: center;
-        background-color: #22211e;
-        .avatar {
-          background-color: #22211e;
-          padding: 10px;
-          img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #22211e !important;
-          }
-        }
-        .text {
-          background-color: #22211e;
-          padding: 10px;
-          line-height: 25px;
-        }
-      }
-    }
-    // AI
-    .right {
-      background-color: #30302d;
-      position: relative;
-      .Ai {
-        display: flex;
-        align-items: center;
-        background-color: #30302d;
-        justify-content: space-between;
-        .avatar {
-          padding: 10px;
-          background-color: #30302d;
-          img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-          }
-        }
-        .text {
-          background-color: #30302d;
-          padding: 10px;
-          line-height: 25px;
-        }
-      }
-      .tools {
-        position: absolute;
-        right: 10px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        font-size: 15px;
-        background-color: #30302d;
-        height: 30px;
-        border-radius: 10px;
-        width: 200px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-        div {
-          background-color: #30302d;
-          cursor: pointer;
-          span {
-            background-color: #30302d;
-          }
-        }
-      }
-    }
-  }
+<style scoped>
+.tools {
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconfont {
+  @apply bg-gray-800;
 }
 </style>
