@@ -77,7 +77,7 @@ const insertPDF = () => {
 .tools {
   position: absolute;
   bottom: 100px;
-  right: 60px;
+  right: 170px;
   display: inline-block;
   .iconfont {
     background-color: #393937;
@@ -88,7 +88,7 @@ const insertPDF = () => {
 .button.iconfont {
   position: absolute;
   bottom: 40px;
-  right: 60px;
+  right: 170px;
   cursor: pointer;
   display: inline-block;
   font-size: 20px;
