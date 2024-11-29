@@ -1,59 +1,65 @@
 <template>
   <div class="container">
-    <div class="top">
-      <div class="title">
-        <i class="iconfont">&#xe626;</i> Introducing Claude,AI Assistant<i
-          class="iconfont"
-          >&#xe64c;</i
-        >
-      </div>
+    <div class="left-content">
+      <Sidebar></Sidebar>
     </div>
-    <div class="content" ref="contain">
-      <!-- 用户 -->
-      <div v-for="(item, index) in messageArr" :key="index">
-        <div class="left" v-if="item.role === 'user'">
-          <div class="user">
-            <div class="avatar">
-              <img src="@/assets/user.png" alt="User Avatar" />
-            </div>
-            <div class="text">{{ item.content }}</div>
-          </div>
-        </div>
-        <!-- AI -->
-        <div class="right" v-else>
-          <div class="Ai">
-            <div class="text" v-html="renderMarkdown(item.content)"></div>
-            <div class="avatar">
-              <img src="@/assets/chatgpt.jpg" alt="AI Avatar" />
-            </div>
-          </div>
-          <div class="tools">
-            <div class="copy" @click="copyMessage(item.content)">
-              <i class="iconfont">&#xe706;</i>
-              <span>Copy</span>
-            </div>
-            <div class="retry">
-              <i class="iconfont">&#xe774;</i>
-              <span>Retry</span>
-            </div>
-            <div class="like">
-              <i class="iconfont">&#xec7f;</i>
-            </div>
-            <div class="dislike">
-              <i class="iconfont">&#xe62d;</i>
-            </div>
-          </div>
+    <div class="right-content">
+      <div class="top">
+        <div class="title">
+          <i class="iconfont">&#xe626;</i> Introducing Claude,AI Assistant<i
+            class="iconfont"
+            >&#xe64c;</i
+          >
         </div>
       </div>
-    </div>
-    <div class="bottom">
-      <RichTextEditor @sendMsg="responseMsg" />
+      <div class="content" ref="contain">
+        <!-- 用户 -->
+        <div v-for="(item, index) in messageArr" :key="index">
+          <div class="left" v-if="item.role === 'user'">
+            <div class="user">
+              <div class="avatar">
+                <img src="@/assets/user.png" alt="User Avatar" />
+              </div>
+              <div class="text">{{ item.content }}</div>
+            </div>
+          </div>
+          <!-- AI -->
+          <div class="right" v-else>
+            <div class="Ai">
+              <div class="text" v-html="renderMarkdown(item.content)"></div>
+              <div class="avatar">
+                <img src="@/assets/chatgpt.jpg" alt="AI Avatar" />
+              </div>
+            </div>
+            <div class="tools">
+              <div class="copy" @click="copyMessage(item.content)">
+                <i class="iconfont">&#xe706;</i>
+                <span>Copy</span>
+              </div>
+              <div class="retry">
+                <i class="iconfont">&#xe774;</i>
+                <span>Retry</span>
+              </div>
+              <div class="like">
+                <i class="iconfont">&#xec7f;</i>
+              </div>
+              <div class="dislike">
+                <i class="iconfont">&#xe62d;</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <RichTextEditor @sendMsg="responseMsg" />
+      </div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
 import RichTextEditor from "./components/RichTextEditor.vue";
+import Sidebar from "./components/Sidebar.vue";
 import { marked } from "marked"; // 引入 marked 库
 const messageArr = ref([]);
 const contain = ref(null);
@@ -124,9 +130,17 @@ const typingEffect = (text) => {
 </script>
 <style scoped lang="scss">
 .container {
+  display: flex;
   height: 731px;
   background-color: #2d2d2a;
-  padding: 10px 30px;
+  .left-content {
+    width: 280px;
+    background-color: #23221e;
+  }
+  .right-content {
+    flex: 1;
+    padding: 10px 150px;
+  }
   .top {
     .title {
       font-size: 22px;
