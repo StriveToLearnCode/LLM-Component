@@ -16,61 +16,61 @@
       <div class="loading" v-if="isSending">
         <loading></loading>
       </div>
-      <div class="arrow" v-else>&#xe60f;</div>
+      <div v-else>&#xe60f;</div>
     </div>
     <div v-html="content" style="display: none"></div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { QuillEditor } from "@vueup/vue-quill";
-import { quickChat } from "@/api/chat";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import loading from "./loading.vue";
-const content = ref(""); // 绑定编辑器内容
-const quill = ref(null);
-const isSending = ref(false); // 用于跟踪发送状态
+import { ref } from 'vue'
+import { QuillEditor } from '@vueup/vue-quill'
+import { quickChat } from '@/api/chat.js'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import loading from './loading.vue'
+const content = ref('') // 绑定编辑器内容
+const quill = ref(null)
+const isSending = ref(false) // 用于跟踪发送状态
 const editorOptions = {
-  placeholder: "Reply to Claude...",
+  placeholder: 'Reply to Claude...',
   modules: {
-    toolbar: false, // 关闭工具栏
-  },
-};
+    toolbar: false // 关闭工具栏
+  }
+}
 // 发送给父组件
-const emit = defineEmits(["sendMsg"]);
+const emit = defineEmits(['sendMsg'])
 
 // 发送消息
 const sendMessage = async () => {
-  if (isSending.value) return;
+  if (isSending.value) return
   if (!content.value) {
-    alert("消息不能为空");
-    return;
+    alert('消息不能为空')
+    return
   }
-  const message = content.value?.ops[0]?.insert;
-  emit("sendMsg", { role: "user", content: message });
-  isSending.value = true;
-  const res = await quickChat(message);
-  isSending.value = false;
-  emit("sendMsg", res.data.choices[0].message);
-};
+  const message = content.value?.ops[0]?.insert
+  emit('sendMsg', { role: 'user', content: message })
+  isSending.value = true
+  const res = await quickChat(message)
+  isSending.value = false
+  emit('sendMsg', res.data.choices[0].message)
+}
 
 // 插入图片
 const insertImage = () => {
-  const url = prompt("Enter the image URL");
-  const range = quill.value.quill.getSelection();
-  quill.value.quill.insertEmbed(range.index, "image", url);
-};
+  const url = prompt('Enter the image URL')
+  const range = quill.value.quill.getSelection()
+  quill.value.quill.insertEmbed(range.index, 'image', url)
+}
 
 // 插入 PDF
 const insertPDF = () => {
-  const url = prompt("Enter the PDF URL");
-  const range = quill.value.quill.getSelection();
+  const url = prompt('Enter the PDF URL')
+  const range = quill.value.quill.getSelection()
   const pdfContainer = `<div class="pdf-container">
                               <embed src="${url}" width="500" height="375" type="application/pdf">
-                            </div>`;
-  quill.value.quill.clipboard.dangerouslyPasteHTML(range.index, pdfContainer);
-};
+                            </div>`
+  quill.value.quill.clipboard.dangerouslyPasteHTML(range.index, pdfContainer)
+}
 </script>
 
 <style scoped>
@@ -99,8 +99,7 @@ const insertPDF = () => {
   height: 30px;
   background-color: #d7d7d7;
 }
-.arrow:hover {
+/* .button.iconfont:hover {
   background-color: #000;
-  border-radius: 50%;
-}
+} */
 </style>

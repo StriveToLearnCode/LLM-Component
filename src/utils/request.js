@@ -1,32 +1,32 @@
-import axios from "axios";
+import axios from 'axios'
 
-const token = `sk-cwaywqlygtnafnhsgfndicsqryarbcojsvgfjjssqtmjsdwe`;
+const token = `sk-cwaywqlygtnafnhsgfndicsqryarbcojsvgfjjssqtmjsdwe`
 const request = axios.create({
-  baseURL: "https://api.siliconflow.cn/v1",
+  baseURL: 'https://api.siliconflow.cn/v1',
   headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  },
-});
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}` // 请求头携带token
+  }
+})
 
 // 请求拦截器
 request.interceptors.request.use(
   function (config) {
-    return config;
+    return config
   },
   function (error) {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
 // 响应拦截器
 request.interceptors.response.use(
   function (response) {
-    return response;
+    return response
   },
   function (error) {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-export default request;
+export default request
