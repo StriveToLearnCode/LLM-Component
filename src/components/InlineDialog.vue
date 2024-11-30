@@ -17,34 +17,30 @@
     </div>
     <div class="bottom">
       <div class="title">Suggestions</div>
-      <div class="list">
+      <div class="list" @click="choose">
         <div class="item">
           <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
+          <span>今天天气怎么样？</span>
+        </div>
+        <div class="item">
+          <i class="iconfont">&#xe62f;</i>
+          <span>现在几点了？</span>
         </div>
         <div class="item">
           <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
+          <span>今天是什么日期？</span>
         </div>
         <div class="item">
           <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
+          <span>能不能给我一些建议？</span>
         </div>
         <div class="item">
           <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
+          <span>能帮我做这个吗？</span>
         </div>
         <div class="item">
           <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
-        </div>
-        <div class="item">
-          <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
-        </div>
-        <div class="item">
-          <i class="iconfont">&#xe663;</i>
-          <span>Get Started with Claude</span>
+          <span>怎么去某个地方？</span>
         </div>
       </div>
     </div>
@@ -52,17 +48,19 @@
   <AskChat v-else></AskChat>
 </template>
 <script setup>
-import { ref, inject } from "vue";
 import AskChat from "./arkChat.vue";
 import { useIsShowStore } from "../store/index";
 const store = useIsShowStore();
 const emit = defineEmits(["close"]);
-const isShow = ref(true);
 const close = () => {
   emit("close", false);
 };
 const enterChat = () => {
   store.setIsShow(false);
+};
+const choose = (e) => {
+  store.setIsShow(false);
+  store.setSuggestion(e.target.innerText);
 };
 </script>
 <style scoped lang="scss">

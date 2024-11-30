@@ -7,10 +7,14 @@ export const useIsShowStore = defineStore("isShow", {
   // 其他配置...
   state: () => ({
     isShow: true,
+    Suggestion: "",
   }),
   actions: {
     setIsShow(value) {
       this.isShow = value;
+    },
+    setSuggestion(value) {
+      this.Suggestion = value;
     },
   },
 });
