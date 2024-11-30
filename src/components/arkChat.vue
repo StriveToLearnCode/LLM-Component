@@ -50,16 +50,22 @@
 </template>
 
 <script setup>
-import { ref, provide } from "vue";
+import { ref, onMounted } from "vue";
 import { quickChat } from "../api/chat";
 import { marked } from "marked"; // 引入 marked 库
 import { useIsShowStore } from "../store/index";
 const isSending = ref(false); // 用于跟踪发送状态
 const content = ref("");
 const messageArr = ref([]);
+const store = useIsShowStore();
+
 // 开场白
-quickChat("介绍你自己简短点").then((res) => {
-  messageArr.value.push(res.data.choices[0].message);
+onMounted(() => {
+  console.log(store.Suggestion);
+  quickChat(store.Suggestion || "介绍你自己简短点").then((res) => {
+    messageArr.value.push(res.data.choices[0].message);
+  });
+  store.setSuggestion("");
 });
 const sendMessage = async () => {
   if (isSending.value) return;
@@ -79,7 +85,6 @@ const sendMessage = async () => {
 const renderMarkdown = (content) => {
   return marked.parse(content); // 使用 marked 库将 Markdown 转换为 HTML
 };
-const store = useIsShowStore();
 const openSearch = () => {
   console.log("openSearch");
   store.setIsShow(true);
