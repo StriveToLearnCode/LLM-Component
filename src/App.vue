@@ -8,7 +8,7 @@
     </div>
     <div class="right-content">
       <div class="top">
-        <div class="title">
+        <div class="title" @click="openDiglog">
           <i class="iconfont">&#xe626;</i> Introducing Claude,AI Assistant<i
             class="iconfont"
             >&#xe64c;</i
@@ -56,6 +56,10 @@
       <div class="bottom">
         <RichTextEditor @sendMsg="responseMsg" />
       </div>
+      <!-- 内联对话 -->
+      <div class="diglog" v-show="isDiglogOpen">
+        <InlineDiglog @close="closeDiglog"></InlineDiglog>
+      </div>
     </div>
   </div>
 </template>
@@ -63,10 +67,12 @@
 import { ref } from "vue";
 import RichTextEditor from "./components/RichTextEditor.vue";
 import Sidebar from "./components/Sidebar.vue";
+import InlineDiglog from "./components/InlineDialog.vue";
 import { marked } from "marked"; // 引入 marked 库
 const messageArr = ref([]);
 const contain = ref(null);
 const isSidebarOpen = ref(true);
+const isDiglogOpen = ref(false);
 // 处理消息发送
 const responseMsg = (message) => {
   // 滚动到最新消息
@@ -143,6 +149,18 @@ const openSidebar = () => {
   // 在这里实现打开侧边栏的逻辑
   isSidebarOpen.value = true;
 };
+// 关闭内联对话框
+const closeDiglog = (v) => {
+  console.log("关闭内联对话框", v);
+  // 在这里实现关闭内联对话框的逻辑
+  isDiglogOpen.value = v;
+};
+// 打开内联对话框
+const openDiglog = () => {
+  console.log("打开内联对话框");
+  // 在这里实现打开内联对话框的逻辑
+  isDiglogOpen.value = true;
+};
 </script>
 <style scoped lang="scss">
 .container {
@@ -159,7 +177,14 @@ const openSidebar = () => {
   }
   .right-content {
     flex: 1;
+    position: relative;
     padding: 10px 150px;
+    .diglog {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
   .top {
     .title {

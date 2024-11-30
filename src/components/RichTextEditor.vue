@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="editor-container">
     <!-- Quill 编辑器 -->
     <QuillEditor
       theme="snow"
@@ -74,10 +74,13 @@ const insertPDF = () => {
 </script>
 
 <style scoped>
+.editor-container {
+  position: relative;
+}
 .tools {
   position: absolute;
-  bottom: 100px;
-  right: 170px;
+  bottom: 80px;
+  right: 20px;
   display: inline-block;
   .iconfont {
     background-color: #393937;
@@ -87,8 +90,8 @@ const insertPDF = () => {
 }
 .button.iconfont {
   position: absolute;
-  bottom: 40px;
-  right: 170px;
+  bottom: 20px;
+  right: 20px;
   cursor: pointer;
   display: inline-block;
   font-size: 20px;
