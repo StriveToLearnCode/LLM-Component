@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-dialog" v-if="isShow">
+  <div class="inline-dialog" v-if="store.isShow">
     <div class="top">
       <input type="text" placeholder="What are you searching for?" />
       <div class="Esc" @click="close">
@@ -52,15 +52,17 @@
   <AskChat v-else></AskChat>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import AskChat from "./arkChat.vue";
+import { useIsShowStore } from "../store/index";
+const store = useIsShowStore();
 const emit = defineEmits(["close"]);
 const isShow = ref(true);
 const close = () => {
   emit("close", false);
 };
 const enterChat = () => {
-  isShow.value = false;
+  store.setIsShow(false);
 };
 </script>
 <style scoped lang="scss">
