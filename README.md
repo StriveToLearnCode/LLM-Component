@@ -1,6 +1,12 @@
-# Rsbuild Project
+# 使用Rspack重构的一个版本
 
-## Setup
+## 介绍
+
+这是一个使用Rspack重构的版本，使用tailwindcss重写样式
+计划集成jest单元测试
+计划配置环境变量实现个人token配置
+
+## Setup （切换分支后记得重新安装依赖哦）
 
 Install the dependencies:
 

@@ -6,6 +6,7 @@
         Assistant<i class="iconfont bg-gray-800">&#xe64c;</i>
       </div>
     </div>
+    <!-- TODO 组件剥离 -->
     <!-- TODO 聊天区域滑动窗口 -->
     <div class="mt-4 w-3/4 overflow-auto m-auto" ref="contain">
       <!-- 用户-->
@@ -36,6 +37,7 @@
                 alt="AI Avatar"
               />
             </div>
+            <!-- TODO markdown处理富文本需要调整，比如代码部分 -->
             <div
               class="bg-gray-600 p-4 leading-6"
               v-html="renderMarkdown(item.content)"
