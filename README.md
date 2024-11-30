@@ -33,3 +33,5 @@ Preview the production build locally:
 ```bash
 pnpm preview
 ```
+
+![alt text](./README_img/image.png)
