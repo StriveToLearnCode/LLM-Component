@@ -1,9 +1,12 @@
 <template>
   <div class="container">
-    <div class="left-content" v-if="isSidebarOpen">
+    <div
+      class="left-content animate__animated animate__fadeInLeft"
+      v-if="isSidebarOpen"
+    >
       <Sidebar @closeSidebar="closeSidebar"></Sidebar>
     </div>
-    <div class="open-sidebar" v-else>
+    <div class="open-sidebar animate__animated animate__fadeInRight" v-else>
       <i class="iconfont" @click="openSidebar"> &#xe6a4;</i>
     </div>
     <div class="right-content">
@@ -58,7 +61,10 @@
       </div>
       <!-- 内联对话 -->
       <div class="diglog" v-show="isDiglogOpen">
-        <InlineDiglog @close="closeDiglog"></InlineDiglog>
+        <InlineDiglog
+          class="animate__animated animate__zoomIn"
+          @close="closeDiglog"
+        ></InlineDiglog>
       </div>
     </div>
   </div>
@@ -165,7 +171,7 @@ const openDiglog = () => {
 <style scoped lang="scss">
 .container {
   display: flex;
-  height: 731px;
+  height: 100%;
   background-color: #2d2d2a;
   .left-content {
     width: 280px;

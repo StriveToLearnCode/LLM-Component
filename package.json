@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
+    "animate.css": "^4.1.1",
     "axios": "^1.7.8",
     "marked": "^15.0.2",
     "normalize.css": "^8.0.1",
