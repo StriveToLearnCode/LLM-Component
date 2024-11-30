@@ -2,18 +2,19 @@
   <div class="h-screen bg-gray-800 p-4 relative">
     <div>
       <div class="text-center text-2xl">
-        <i class="iconfont">&#xe626;</i> Introducing Claude,AI Assistant<i
-          class="iconfont"
-          >&#xe64c;</i
-        >
+        <i class="iconfont bg-gray-800">&#xe626;</i> Introducing Claude,AI
+        Assistant<i class="iconfont bg-gray-800">&#xe64c;</i>
       </div>
     </div>
-    <div class="mt-4 w-full overflow-auto" ref="contain">
-      <!-- 用户 -->
+    <!-- TODO 聊天区域滑动窗口 -->
+    <div class="mt-4 w-3/4 overflow-auto m-auto" ref="contain">
+      <!-- 用户-->
+      <!-- TODO 用户区域留言靠左 -->
       <div v-for="(item, index) in messageArr" :key="index">
         <!-- 原先left -->
-        <div class="rounded-lg p-4 mb-4 bg-gray-700" v-if="item.role === 'user'">
+        <div class="rounded-2xl p-4 mb-6 bg-gray-700" v-if="item.role === 'user'">
           <div class="flex items-center bg-gray-700">
+            <div class="bg-gray-700 p-4 leading-6">{{ item.content }}</div>
             <div class="bg-gray-700 p-4">
               <img
                 class="w-12 h-12 rounded-full bg-gray-700"
@@ -21,17 +22,13 @@
                 alt="User Avatar"
               />
             </div>
-            <div class="bg-gray-700 p-4 leading-6">{{ item.content }}</div>
           </div>
         </div>
         <!-- AI -->
         <!-- 原先right -->
-        <div class="rounded-lg p-4 mb-4 bg-gray-600 relative" v-else>
+        <!-- TODO AI区域留言靠左 -->
+        <div class="rounded-2xl p-4 mb-4 bg-gray-600 relative" v-else>
           <div class="flex items-center bg-gray-600 justify-between">
-            <div
-              class="bg-gray-600 p-4 leading-6"
-              v-html="renderMarkdown(item.content)"
-            ></div>
             <div class="bg-gray-600 p-4">
               <img
                 class="w-12 h-12 rounded-full bg-gray-600"
@@ -39,23 +36,27 @@
                 alt="AI Avatar"
               />
             </div>
+            <div
+              class="bg-gray-600 p-4 leading-6"
+              v-html="renderMarkdown(item.content)"
+            ></div>
           </div>
           <div
-            class="absolute right-4 flex justify-center items-center text-sm bg-gray-600 h-8 rounded-lg w-48 shadow-md"
+            class="absolute right-4 flex justify-center items-center text-sm bg-gray-600 h-8 rounded-lg w-40 shadow-md"
           >
-            <div class="cursor-pointer" @click="copyMessage(item.content)">
-              <i class="iconfont">&#xe706;</i>
+            <div class="cursor-pointer mr-1" @click="copyMessage(item.content)">
+              <i class="iconfont bg-gray-600">&#xe706;</i>
               <span class="bg-gray-600">Copy</span>
             </div>
-            <div class="cursor-pointer">
-              <i class="iconfont">&#xe774;</i>
+            <div class="cursor-pointer mr-1">
+              <i class="iconfont bg-gray-600">&#xe774;</i>
               <span class="bg-gray-600">Retry</span>
             </div>
-            <div class="cursor-pointer">
-              <i class="iconfont">&#xec7f;</i>
+            <div class="cursor-pointer mr-1">
+              <i class="iconfont bg-gray-600">&#xec7f;</i>
             </div>
             <div class="cursor-pointer">
-              <i class="iconfont">&#xe62d;</i>
+              <i class="iconfont bg-gray-600">&#xe62d;</i>
             </div>
           </div>
         </div>
@@ -136,9 +137,5 @@ const typingEffect = (text) => {
 .tools {
   display: flex;
   justify-content: space-between;
-}
-
-.iconfont {
-  @apply bg-gray-800;
 }
 </style>

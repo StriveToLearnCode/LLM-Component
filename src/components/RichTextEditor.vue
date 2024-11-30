@@ -23,7 +23,7 @@
     </div>
 
     <div
-      class="iconfont absolute bottom-2 right-2 cursor-pointer inline-block text-4xl bg-gray-300 rounded-full flex items-center justify-center w-14 h-14"
+      class="iconfont absolute bottom-2 right-2 cursor-pointer inline-block text-4xl bg-gray-800 rounded-full flex items-center justify-center w-14 h-14"
       @click="sendMessage"
     >
       <div class="loading" v-if="isSending">
