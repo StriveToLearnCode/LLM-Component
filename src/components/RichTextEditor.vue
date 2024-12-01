@@ -27,7 +27,9 @@ import { ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import { quickChat } from "@/api/chat";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { useIsShowStore } from "@/store/index";
 import loading from "./loading.vue";
+const store = useIsShowStore();
 const content = ref(""); // 绑定编辑器内容
 const quill = ref(null);
 const isSending = ref(false); // 用于跟踪发送状态
@@ -37,8 +39,6 @@ const editorOptions = {
     toolbar: false, // 关闭工具栏
   },
 };
-// 发送给父组件
-const emit = defineEmits(["sendMsg"]);
 
 // 发送消息
 const sendMessage = async () => {
@@ -48,11 +48,12 @@ const sendMessage = async () => {
     return;
   }
   const message = content.value?.ops[0]?.insert;
-  emit("sendMsg", { role: "user", content: message });
+  store.addMessageArr({ role: "user", content: message });
   isSending.value = true;
   const res = await quickChat(message);
   isSending.value = false;
-  emit("sendMsg", res.data.choices[0].message);
+  console.log(res.data.choices[0].message);
+  store.addMessageArr(res.data.choices[0].message);
 };
 
 // 插入图片

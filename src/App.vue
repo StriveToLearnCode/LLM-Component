@@ -1,9 +1,12 @@
 <template>
   <div class="container">
-    <div class="left-content" v-if="isSidebarOpen">
+    <div
+      class="left-content animate__animated animate__fadeInLeft"
+      v-if="isSidebarOpen"
+    >
       <Sidebar @closeSidebar="closeSidebar"></Sidebar>
     </div>
-    <div class="open-sidebar" v-else>
+    <div class="open-sidebar animate__animated animate__fadeInRight" v-else>
       <i class="iconfont" @click="openSidebar"> &#xe6a4;</i>
     </div>
     <div class="right-content">
@@ -54,45 +57,31 @@
         </div>
       </div>
       <div class="bottom">
-        <RichTextEditor @sendMsg="responseMsg" />
+        <RichTextEditor />
       </div>
       <!-- 内联对话 -->
       <div class="diglog" v-show="isDiglogOpen">
-        <InlineDiglog @close="closeDiglog"></InlineDiglog>
+        <InlineDiglog
+          class="animate__animated animate__zoomIn"
+          @close="closeDiglog"
+        ></InlineDiglog>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import RichTextEditor from "./components/RichTextEditor.vue";
 import Sidebar from "./components/Sidebar.vue";
 import InlineDiglog from "./components/InlineDialog.vue";
+import { useIsShowStore } from "@/store/index";
 import { marked } from "marked"; // 引入 marked 库
-const messageArr = ref([]);
+const store = useIsShowStore();
+const messageArr = computed(() => store.messageArr);
+
 const contain = ref(null);
 const isSidebarOpen = ref(true);
 const isDiglogOpen = ref(false);
-// 处理消息发送
-const responseMsg = (message) => {
-  // 滚动到最新消息
-  if (contain.value) {
-    contain.value.scrollTop = contain.value.scrollHeight;
-  }
-  console.log(message);
-
-  // 如果消息来自 AI，则执行打字机效果
-  if (message.role === "assistant") {
-    // 推送新的消息对象到数组
-    messageArr.value.push({
-      ...message,
-      content: "", // 初始化为空字符串，打字效果开始时再填充内容
-    });
-    typingEffect(message.content);
-  } else {
-    messageArr.value.push(message);
-  }
-};
 
 // 复制消息内容
 const copyMessage = (message) => {
@@ -114,29 +103,7 @@ const copyMessage = (message) => {
 const renderMarkdown = (content) => {
   return marked.parse(content); // 使用 marked 库将 Markdown 转换为 HTML
 };
-// 打字机效果
-const typingEffect = (text) => {
-  const lastMessageIndex = messageArr.value.length - 1; // 获取最后一条消息的索引
-  let index = 0;
 
-  // 每个字符逐渐显示，模拟打字机效果
-  const typingInterval = setInterval(() => {
-    if (index < text.length) {
-      messageArr.value[lastMessageIndex].content += text[index]; // 每次追加一个字符
-      index++;
-      // 滚动到最新消息
-      if (contain.value) {
-        contain.value.scrollTop = contain.value.scrollHeight;
-      }
-    } else {
-      clearInterval(typingInterval); // 打字结束，清除定时器
-      // 滚动到最新消息
-      if (contain.value) {
-        contain.value.scrollTop = contain.value.scrollHeight;
-      }
-    }
-  }, 50); // 控制每个字符之间的时间间隔
-};
 // 关闭侧边栏
 const closeSidebar = (value) => {
   console.log("关闭侧边栏", value);
@@ -165,7 +132,7 @@ const openDiglog = () => {
 <style scoped lang="scss">
 .container {
   display: flex;
-  height: 731px;
+  height: 100%;
   background-color: #2d2d2a;
   .left-content {
     width: 280px;
