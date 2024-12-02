@@ -1,10 +1,8 @@
 <template>
   <div class="h-screen bg-gray-800 p-4 relative overflow-hidden">
+    <!-- 头部区域 -->
     <div>
-      <div class="text-center text-2xl">
-        <i class="iconfont bg-gray-800">&#xe626;</i> Introducing Claude,AI
-        Assistant<i class="iconfont bg-gray-800">&#xe64c;</i>
-      </div>
+      <HeadBar />
     </div>
     <!-- 聊天区域 -->
     <div class="w-3/5 m-auto">
@@ -13,11 +11,7 @@
   </div>
 </template>
 <script setup>
+import HeadBar from './components/HeadBar.vue'
 import TalkingList from './components/TalkingList.vue'
 </script>
-<style scoped>
-.tools {
-  display: flex;
-  justify-content: space-between;
-}
-</style>
+<style scoped></style>
