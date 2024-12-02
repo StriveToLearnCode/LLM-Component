@@ -1,6 +1,5 @@
 <template>
-  <!-- TODO 聊天区域滑动窗口 -->
-  <div class="mt-4 w-full overflow-auto m-auto" ref="contain">
+  <div class="mt-4 h-screen w-full overflow-auto m-auto" ref="contain">
     <!-- 用户 -->
     <div v-for="(item, index) in messageArr" :key="index" class="message-item">
       <!-- 用户区域留言靠左 -->
@@ -54,6 +53,7 @@
       </div>
     </div>
   </div>
+
   <div class="w-full absolute bottom-4 right-1 tablet:right-0">
     <RichTextEditor class="w-4/5 tablet:w-1/2 m-auto" @sendMsg="responseMsg" />
   </div>

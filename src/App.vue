@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-gray-800 p-4 relative">
+  <div class="h-screen bg-gray-800 p-4 relative overflow-hidden">
     <div>
       <div class="text-center text-2xl">
         <i class="iconfont bg-gray-800">&#xe626;</i> Introducing Claude,AI
