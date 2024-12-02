@@ -87,9 +87,6 @@ const insertPDF = () => {
 </script>
 
 <style scoped>
-.box {
-  position: relative;
-}
 .tools {
   position: absolute;
   bottom: 100px;
